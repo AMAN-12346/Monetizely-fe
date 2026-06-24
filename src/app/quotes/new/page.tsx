@@ -74,6 +74,8 @@ export default function NewQuotePage() {
     ? selectedProduct.features.flatMap((f) => {
         const config = f.tierConfigs.find((tc) => tc.tierId === selectedTierId);
         if (!config || config.availability !== 'add-on') return [];
+        // Filter out unpriced add-ons
+        if (!config.pricingModel || config.pricingValue == null) return [];
         return [{ feature: f, config }];
       })
     : [];
